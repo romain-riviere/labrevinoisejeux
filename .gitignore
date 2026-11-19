@@ -1,0 +1,11 @@
+# Archives d'origine (l'historique Git les remplace)
+/*.zip
+
+# Sorties des scripts
+/dist/
+/.wp-test/
+
+# Système
+.DS_Store
+__MACOSX/
+Thumbs.db
