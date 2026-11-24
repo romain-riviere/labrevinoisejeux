@@ -25,6 +25,7 @@ function brev_defaults() {
 		'shop_url'         => 'https://www.labrevinoise.fr/ou-trouver-nos-jeux/',
 		'item_btn'         => 'Voir dans la boutique',
 		'play_btn'         => 'Tester le jeu',
+		'video_btn'        => 'Voir la vidéo',
 		'hero_image'       => '',
 		'hero_title'       => 'Des jeux drôles, rapides et fédérateurs, créés à Saint-Brevin',
 		'hero_text1'       => "La Brévinoise Jeux est la section spécialisée dans l'édition de jeux de société de l'association culturelle La Brévinoise, basée à Saint-Brévin-les-Pins en Loire-Atlantique.",
@@ -113,6 +114,7 @@ function brev_types() {
 			'fields' => array(
 				'tags'     => array( 'Étiquettes', 'text', 'Séparées par des virgules : 2–5 joueurs, 8 ans +, 30 min' ),
 				'link'     => array( 'Lien vers la boutique', 'url', 'Quand on clique sur le jeu, on arrive sur cette adresse.' ),
+				'video'    => array( 'Lien vidéo', 'url', 'YouTube, Vimeo ou autre : ajoute le bouton « Voir la vidéo » sur la fiche. Vide = pas de bouton.' ),
 				'play'     => array( 'Jeu en ligne associé', 'play', 'Ajoute le bouton « Tester le jeu » sur la fiche.' ),
 				'play_url' => array( "Ou adresse d'un autre jeu en ligne", 'url', 'Facultatif : remplace le choix ci-dessus.' ),
 			),
@@ -128,6 +130,7 @@ function brev_types() {
 				'kind'     => array( 'Catégorie', 'kind', '' ),
 				'tags'     => array( 'Étiquettes', 'text', 'Séparées par des virgules' ),
 				'link'     => array( 'Lien vers la boutique', 'url', 'Quand on clique, on arrive sur cette adresse.' ),
+				'video'    => array( 'Lien vidéo', 'url', 'YouTube, Vimeo ou autre : ajoute le bouton « Voir la vidéo » sur la fiche. Vide = pas de bouton.' ),
 				'play'     => array( 'Jeu en ligne associé', 'play', 'Ajoute le bouton « Tester le jeu ».' ),
 				'play_url' => array( "Ou adresse d'un autre jeu en ligne", 'url', '' ),
 			),
@@ -142,6 +145,7 @@ function brev_types() {
 			'fields' => array(
 				'tags' => array( 'Étiquettes', 'text', 'Auteurs, nombre de pages, date…' ),
 				'link' => array( 'Lien vers la boutique', 'url', "Quand on clique sur l'album, on arrive sur cette adresse." ),
+				'video' => array( 'Lien vidéo', 'url', 'YouTube, Vimeo ou autre : ajoute le bouton « Voir la vidéo » sur la fiche. Vide = pas de bouton.' ),
 			),
 		),
 		'adherent' => array(

@@ -102,6 +102,7 @@ function brev_card( $p, $is_new = false ) {
 	$link  = get_post_meta( $p->ID, '_brev_link', true );
 	$kind  = get_post_meta( $p->ID, '_brev_kind', true );
 	$play  = brev_play_url( $p );
+	$video = get_post_meta( $p->ID, '_brev_video', true );
 	$img   = brev_img( $p );
 	$title = get_the_title( $p );
 	$badge = ( $is_new ? '<span class="new">Nouveau</span>' : '' ) . ( $kind ? '<span class="kind">' . esc_html( $kind ) . '</span>' : '' );
@@ -118,13 +119,16 @@ function brev_card( $p, $is_new = false ) {
 		echo '<span class="tag">' . esc_html( $t ) . '</span>';
 	}
 	echo '</div>';
-	if ( $link || $play ) {
+	if ( $link || $play || $video ) {
 		echo '<div class="cbtns">';
 		if ( $link ) {
 			echo '<a class="btn sm" href="' . esc_url( $link ) . '" target="_blank" rel="noopener">' . esc_html( brev_mod( 'item_btn' ) ) . ' →</a>';
 		}
 		if ( $play ) {
 			echo '<a class="btn sm play" href="' . esc_url( $play ) . '">▶ ' . esc_html( brev_mod( 'play_btn' ) ) . '</a>';
+		}
+		if ( $video ) {
+			echo '<a class="btn sm video" href="' . esc_url( $video ) . '" target="_blank" rel="noopener">🎬 ' . esc_html( brev_mod( 'video_btn' ) ) . '</a>';
 		}
 		echo '</div>';
 	}

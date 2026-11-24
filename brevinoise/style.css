@@ -95,6 +95,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 .pclose{position:absolute;top:10px;right:10px;width:40px;height:40px;border-radius:50%;border:0;background:var(--soft);color:var(--ink);font-size:18px;cursor:pointer}
 .btn.sm{min-height:42px;padding:0 16px;font-size:15px;margin:0}
 .btn.play{background:var(--accent);color:#14213d}
+.btn.video{background:var(--dark);color:#fff}
 .cbtns{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .card>a{display:block;color:inherit}
 @media(prefers-reduced-motion:reduce){.pop{animation:none}.fest img,.member img{transition:none}}

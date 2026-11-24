@@ -63,6 +63,7 @@ function brev_customize( $c ) {
 	$add( 'brev_links', 'shop_url', 'Adresse de la boutique en ligne', 'url', "L'onglet du menu qui pointe vers cette adresse est mis en valeur." );
 	$add( 'brev_links', 'item_btn', 'Bouton sur les jeux, BD et accessoires' );
 	$add( 'brev_links', 'play_btn', 'Bouton des jeux en ligne' );
+	$add( 'brev_links', 'video_btn', 'Bouton vidéo des fiches' );
 
 	/* Accueil */
 	$c->add_section( 'brev_home', array( 'title' => "Page d'accueil", 'panel' => 'brev' ) );
