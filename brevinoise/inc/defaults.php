@@ -113,8 +113,9 @@ function brev_types() {
 			'img'    => 'Visuel de la boîte',
 			'fields' => array(
 				'tags'     => array( 'Étiquettes', 'text', 'Séparées par des virgules : 2–5 joueurs, 8 ans +, 30 min' ),
-				'link'     => array( 'Lien vers la boutique', 'url', 'Quand on clique sur le jeu, on arrive sur cette adresse.' ),
-				'video'    => array( 'Lien vidéo', 'url', 'YouTube, Vimeo ou autre : ajoute le bouton « Voir la vidéo » sur la fiche. Vide = pas de bouton.' ),
+				'link'     => array( 'Lien vers la boutique', 'url', 'Adresse du jeu dans la boutique : utilisée par le bouton boutique.' ),
+				'video'    => array( 'Lien vidéo', 'url', 'Lien YouTube, Vimeo ou fichier .mp4 : la vidéo s’affiche dans l’onglet « Vidéo » de la page de présentation. Vide = pas d’onglet.' ),
+				'gallery'  => array( 'Galerie d’images', 'gallery', 'Photos en plus de l’image principale : elles forment le carrousel de la page de présentation. Vide = pas de carrousel.' ),
 				'play'     => array( 'Jeu en ligne associé', 'play', 'Ajoute le bouton « Tester le jeu » sur la fiche.' ),
 				'play_url' => array( "Ou adresse d'un autre jeu en ligne", 'url', 'Facultatif : remplace le choix ci-dessus.' ),
 			),
@@ -129,8 +130,9 @@ function brev_types() {
 			'fields' => array(
 				'kind'     => array( 'Catégorie', 'kind', '' ),
 				'tags'     => array( 'Étiquettes', 'text', 'Séparées par des virgules' ),
-				'link'     => array( 'Lien vers la boutique', 'url', 'Quand on clique, on arrive sur cette adresse.' ),
-				'video'    => array( 'Lien vidéo', 'url', 'YouTube, Vimeo ou autre : ajoute le bouton « Voir la vidéo » sur la fiche. Vide = pas de bouton.' ),
+				'link'     => array( 'Lien vers la boutique', 'url', 'Adresse du produit dans la boutique : utilisée par le bouton boutique.' ),
+				'video'    => array( 'Lien vidéo', 'url', 'Lien YouTube, Vimeo ou fichier .mp4 : la vidéo s’affiche dans l’onglet « Vidéo » de la page de présentation. Vide = pas d’onglet.' ),
+				'gallery'  => array( 'Galerie d’images', 'gallery', 'Photos en plus de l’image principale : elles forment le carrousel de la page de présentation. Vide = pas de carrousel.' ),
 				'play'     => array( 'Jeu en ligne associé', 'play', 'Ajoute le bouton « Tester le jeu ».' ),
 				'play_url' => array( "Ou adresse d'un autre jeu en ligne", 'url', '' ),
 			),
@@ -144,8 +146,9 @@ function brev_types() {
 			'img'    => 'Couverture',
 			'fields' => array(
 				'tags' => array( 'Étiquettes', 'text', 'Auteurs, nombre de pages, date…' ),
-				'link' => array( 'Lien vers la boutique', 'url', "Quand on clique sur l'album, on arrive sur cette adresse." ),
-				'video' => array( 'Lien vidéo', 'url', 'YouTube, Vimeo ou autre : ajoute le bouton « Voir la vidéo » sur la fiche. Vide = pas de bouton.' ),
+				'link' => array( 'Lien vers la boutique', 'url', "Adresse de l'album dans la boutique : utilisée par le bouton boutique." ),
+				'video'    => array( 'Lien vidéo', 'url', 'Lien YouTube, Vimeo ou fichier .mp4 : la vidéo s’affiche dans l’onglet « Vidéo » de la page de présentation. Vide = pas d’onglet.' ),
+				'gallery'  => array( 'Galerie d’images', 'gallery', 'Photos en plus de l’image principale : elles forment le carrousel de la page de présentation. Vide = pas de carrousel.' ),
 			),
 		),
 		'adherent' => array(

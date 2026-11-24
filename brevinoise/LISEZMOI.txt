@@ -22,6 +22,9 @@ OÙ MODIFIER QUOI (uniquement une fois connecté en administrateur)
     images des cartes, table, vitesse) : menu « Gare au Chacal ».
     Les visiteurs ne peuvent rien personnaliser dans le jeu.
   - Bouton « Tester le jeu » sur une fiche : champ « Jeu en ligne associé » de la fiche.
+  - Page de présentation : un clic sur l'image ou le titre d'un jeu, d'une BD, d'une escape box ou d'un accessoire ouvre
+    sa page de présentation (image, description, étiquettes, bouton boutique, carrousel, onglet Vidéo).
+    Le carrousel se remplit avec le champ « Galerie d'images » de la fiche, la vidéo avec « Lien vidéo ».
 
 FORMULAIRE DE CONTACT
   Les messages sont envoyés à l'adresse indiquée dans Personnaliser › La Brévinoise ›

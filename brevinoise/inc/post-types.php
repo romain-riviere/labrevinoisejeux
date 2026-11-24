@@ -128,6 +128,16 @@ function brev_render_fields( $post, $box ) {
 				}
 			}
 			echo '</div>';
+		} elseif ( 'gallery' === $type ) {
+			$gids = brev_gallery_ids( $post );
+			echo '<div class="brev-gallery"><input type="hidden" id="' . esc_attr( $id ) . '" name="' . esc_attr( $id ) . '" value="' . esc_attr( implode( ',', $gids ) ) . '"><ul class="brev-gal-list">';
+			foreach ( $gids as $gid ) {
+				$src = wp_get_attachment_image_url( $gid, 'thumbnail' );
+				if ( $src ) {
+					echo '<li data-id="' . (int) $gid . '"><img src="' . esc_url( $src ) . '" alt=""><span class="brev-gal-btns"><button type="button" class="brev-g-left" aria-label="Avancer">◀</button><button type="button" class="brev-g-right" aria-label="Reculer">▶</button><button type="button" class="brev-g-del" aria-label="Retirer">✕</button></span></li>';
+				}
+			}
+			echo '</ul><button type="button" class="button brev-gal-add">Ajouter des images</button></div>';
 		} elseif ( 'play' === $type ) {
 			echo '<select id="' . esc_attr( $id ) . '" name="' . esc_attr( $id ) . '"><option value="">Aucun</option>';
 			foreach ( brev_nav_games() as $gid => $g ) {
@@ -183,6 +193,8 @@ function brev_save_fields( $post_id, $post ) {
 				$v = esc_url_raw( trim( (string) $raw ) );
 			} elseif ( 'play' === $type ) {
 				$v = array_key_exists( $raw, brev_nav_games() ) ? $raw : '';
+			} elseif ( 'gallery' === $type ) {
+				$v = implode( ',', array_filter( array_map( 'absint', explode( ',', (string) $raw ) ) ) );
 			} elseif ( 'kind' === $type ) {
 				$v = 'Accessoire' === $raw ? 'Accessoire' : 'Escape Box';
 			} else {
@@ -199,6 +211,11 @@ add_action( 'admin_enqueue_scripts', 'brev_admin_assets' );
  */
 function brev_admin_assets() {
 	wp_enqueue_style( 'brev-admin', BREV_URI . '/assets/admin.css', array(), BREV_VERSION );
+	$screen = get_current_screen();
+	if ( $screen && 'post' === $screen->base && in_array( $screen->post_type, wp_list_pluck( brev_types(), 'pt' ), true ) ) {
+		wp_enqueue_media();
+		wp_enqueue_script( 'brev-admin-gallery', BREV_URI . '/assets/admin-gallery.js', array( 'jquery' ), BREV_VERSION, true );
+	}
 }
 
 /* Colonnes « Image » et « Lien » dans les listes. */

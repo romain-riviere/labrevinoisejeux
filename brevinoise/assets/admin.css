@@ -15,3 +15,9 @@
 .brev-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px;max-width:1100px}
 .brev-card{background:#fff;border:1px solid #dcdcde;padding:10px;display:flex;flex-direction:column;gap:8px}
 .brev-card .brev-media{flex-direction:column;align-items:flex-start}
+.brev-gal-list{display:flex;flex-wrap:wrap;gap:10px;list-style:none;margin:0 0 10px;padding:0}
+.brev-gal-list li{position:relative;width:110px;background:#fff;border:1px solid #c3c4c7;border-radius:6px;padding:4px}
+.brev-gal-list img{width:100%;height:90px;object-fit:cover;border-radius:4px;display:block}
+.brev-gal-btns{display:flex;justify-content:space-between;margin-top:4px}
+.brev-gal-btns button{border:0;background:#f0f0f1;border-radius:4px;min-width:32px;min-height:28px;cursor:pointer}
+.brev-gal-btns .brev-g-del{color:#b32d2e}

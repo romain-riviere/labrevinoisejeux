@@ -109,12 +109,10 @@ function brev_card( $p, $is_new = false ) {
 	$pic   = $img
 		? '<div class="cv"><img src="' . esc_url( $img ) . '" alt="' . esc_attr( $title ) . '" loading="lazy">' . $badge . '</div>'
 		: '<div class="cv"><span class="soon">' . esc_html( $title ) . '<br><small>Visuel à venir</small></span>' . $badge . '</div>';
-	if ( $link ) {
-		$pic = '<a href="' . esc_url( $link ) . '" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">' . $pic . '</a>';
-	}
+	$pic = '<a href="' . esc_url( get_permalink( $p ) ) . '" tabindex="-1" aria-hidden="true">' . $pic . '</a>';
 	$search = mb_strtolower( $title . ' ' . brev_desc( $p ) . ' ' . implode( ' ', brev_tags( $p ) ) );
 	echo '<article class="card" data-search="' . esc_attr( $search ) . '" data-kind="' . esc_attr( $kind ) . '">' . $pic . '<div class="body">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	echo '<h3>' . esc_html( $title ) . '</h3><p>' . esc_html( wp_trim_words( brev_desc( $p ), 45 ) ) . '</p><div class="tags">';
+	echo '<h3><a class="ctitle" href="' . esc_url( get_permalink( $p ) ) . '">' . esc_html( $title ) . '</a></h3><p>' . esc_html( wp_trim_words( brev_desc( $p ), 45 ) ) . '</p><div class="tags">';
 	foreach ( brev_tags( $p ) as $t ) {
 		echo '<span class="tag">' . esc_html( $t ) . '</span>';
 	}
@@ -128,7 +126,7 @@ function brev_card( $p, $is_new = false ) {
 			echo '<a class="btn sm play" href="' . esc_url( $play ) . '">▶ ' . esc_html( brev_mod( 'play_btn' ) ) . '</a>';
 		}
 		if ( $video ) {
-			echo '<a class="btn sm video" href="' . esc_url( $video ) . '" target="_blank" rel="noopener">🎬 ' . esc_html( brev_mod( 'video_btn' ) ) . '</a>';
+			echo '<a class="btn sm video" href="' . esc_url( get_permalink( $p ) . '#video' ) . '">🎬 ' . esc_html( brev_mod( 'video_btn' ) ) . '</a>';
 		}
 		echo '</div>';
 	}
@@ -235,4 +233,66 @@ function brev_pagehead( $title, $intro = '' ) {
  */
 function brev_lines( $t ) {
 	return nl2br( esc_html( (string) $t ) );
+}
+
+/**
+ * Images de la galerie d'une fiche (identifiants).
+ *
+ * @param WP_Post|int $p Fiche.
+ * @return int[]
+ */
+function brev_gallery_ids( $p ) {
+	$id  = is_object( $p ) ? $p->ID : (int) $p;
+	$ids = array_filter( array_map( 'absint', explode( ',', (string) get_post_meta( $id, '_brev_gallery', true ) ) ) );
+	return array_values(
+		array_filter(
+			$ids,
+			function ( $i ) {
+				return wp_attachment_is_image( $i );
+			}
+		)
+	);
+}
+
+/**
+ * Lecteur vidéo d'une adresse (YouTube, Vimeo, fichier vidéo ou autre adresse prise en charge par WordPress).
+ *
+ * @param string $url   Adresse de la vidéo.
+ * @param string $title Titre (accessibilité).
+ * @return string HTML, vide si l'adresse n'est pas lisible sur la page.
+ */
+function brev_video_html( $url, $title = '' ) {
+	$url = trim( (string) $url );
+	if ( '' === $url ) {
+		return '';
+	}
+	$src = '';
+	if ( preg_match( '~(?:youtube\.com/(?:watch\?(?:[^#]*&)?v=|embed/|shorts/|live/)|youtu\.be/)([A-Za-z0-9_-]{11})~i', $url, $m ) ) {
+		$src = 'https://www.youtube-nocookie.com/embed/' . $m[1] . '?rel=0';
+	} elseif ( preg_match( '~vimeo\.com/(?:video/)?(\d+)(?:/([a-f0-9]+))?~i', $url, $m ) ) {
+		$src = 'https://player.vimeo.com/video/' . $m[1] . ( ! empty( $m[2] ) ? '?h=' . $m[2] : '' );
+	}
+	if ( $src ) {
+		return '<div class="vframe"><iframe data-src="' . esc_url( $src ) . '" title="' . esc_attr( 'Vidéo : ' . $title ) . '" loading="lazy" allow="accelerometer; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>';
+	}
+	if ( preg_match( '~\.(mp4|webm|ogv|m4v)(\?.*)?$~i', $url ) ) {
+		return '<div class="vframe"><video controls preload="none" src="' . esc_url( $url ) . '"></video></div>';
+	}
+	$html = wp_oembed_get( $url, array( 'width' => 1000 ) );
+	return $html ? '<div class="vframe">' . $html . '</div>' : '';
+}
+
+add_filter( 'single_template', 'brev_single_fiche_template' );
+/**
+ * Page de présentation pour les jeux, BD, escape box et accessoires.
+ *
+ * @param string $tpl Modèle prévu par WordPress.
+ * @return string
+ */
+function brev_single_fiche_template( $tpl ) {
+	$k = brev_key_of( get_post_type() );
+	if ( $k && in_array( $k, array( 'jeu', 'escape', 'bd' ), true ) && file_exists( BREV_DIR . '/single-fiche.php' ) ) {
+		return BREV_DIR . '/single-fiche.php';
+	}
+	return $tpl;
 }
