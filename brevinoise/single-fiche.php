@@ -32,12 +32,6 @@ brev_pagehead( $title );
 					<span class="soon"><?php echo esc_html( $title ); ?><br><small>Visuel à venir</small></span>
 				<?php endif; ?>
 			</div>
-		</div>
-		<div class="fiche-body">
-			<?php if ( $kind ) : ?>
-				<p class="fiche-kind"><?php echo esc_html( $kind ); ?></p>
-			<?php endif; ?>
-			<div class="prose fiche-text"><?php the_content(); ?></div>
 			<?php if ( $tags ) : ?>
 				<div class="tags">
 					<?php foreach ( $tags as $t ) : ?>
@@ -54,6 +48,12 @@ brev_pagehead( $title );
 				<?php endif; ?>
 				<a class="btn alt" href="<?php echo esc_url( get_post_type_archive_link( $p->post_type ) ); ?>">← <?php echo esc_html( brev_mod( 'title_' . $k ) ); ?></a>
 			</div>
+		</div>
+		<div class="fiche-body">
+			<?php if ( $kind ) : ?>
+				<p class="fiche-kind"><?php echo esc_html( $kind ); ?></p>
+			<?php endif; ?>
+			<div class="prose fiche-text"><?php the_content(); ?></div>
 			<?php if ( $gal ) : ?>
 				<div class="fiche-gallery" role="region" aria-label="<?php echo esc_attr( 'Images : ' . $title ); ?>">
 					<div class="carousel" data-carousel>
