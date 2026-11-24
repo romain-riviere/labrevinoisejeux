@@ -13,7 +13,8 @@ $btn2    = brev_mod( 'hero_btn2_link' ) ? brev_mod( 'hero_btn2_link' ) : ( $cont
 $blocks  = array(
 	'festival' => array( 'fest', 'fgrid', '' ),
 	'jeu'      => array( 'jeux', 'grid', 'alt-bg' ),
-	'bd'       => array( 'bd', 'grid', '' ),
+	'escape'   => array( 'escape', 'grid', '' ),
+	'bd'       => array( 'bd', 'grid', 'alt-bg' ),
 );
 ?>
 <div class="band hero"><div class="wrap">

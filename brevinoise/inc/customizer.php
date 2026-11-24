@@ -74,7 +74,7 @@ function brev_customize( $c ) {
 	$add( 'brev_home', 'hero_btn1_link', 'Lien du 1er bouton', 'link', 'Vide = page des jeux.' );
 	$add( 'brev_home', 'hero_btn2_label', 'Texte du 2e bouton' );
 	$add( 'brev_home', 'hero_btn2_link', 'Lien du 2e bouton', 'link', 'Vide = page Contact.' );
-	foreach ( array( 'fest' => 'festivals', 'jeux' => 'jeux', 'bd' => 'BD' ) as $s => $l ) {
+	foreach ( array( 'fest' => 'festivals', 'jeux' => 'jeux', 'escape' => 'escape box', 'bd' => 'BD' ) as $s => $l ) {
 		$add( 'brev_home', $s . '_title', 'Section ' . $l . ' : titre' );
 		$add( 'brev_home', $s . '_text', 'Section ' . $l . ' : texte', 'textarea' );
 		$add( 'brev_home', $s . '_btn', 'Section ' . $l . ' : bouton' );
