@@ -54,29 +54,8 @@ brev_pagehead( $title );
 				<?php endif; ?>
 				<a class="btn alt" href="<?php echo esc_url( get_post_type_archive_link( $p->post_type ) ); ?>">← <?php echo esc_html( brev_mod( 'title_' . $k ) ); ?></a>
 			</div>
-		</div>
-	</article>
-
-	<?php
-	$tabs = array();
-	if ( $gal ) {
-		$tabs['images'] = 'Images';
-	}
-	if ( $vurl ) {
-		$tabs['video'] = 'Vidéo';
-	}
-	if ( $tabs ) :
-		$first = key( $tabs );
-		?>
-		<section class="medias">
-			<div class="tablist" role="tablist" aria-label="Images et vidéo">
-				<?php foreach ( $tabs as $id => $label ) : ?>
-					<button type="button" role="tab" class="tab<?php echo $id === $first ? ' on' : ''; ?>" id="tab-<?php echo esc_attr( $id ); ?>" aria-controls="<?php echo esc_attr( $id ); ?>" aria-selected="<?php echo $id === $first ? 'true' : 'false'; ?>" tabindex="<?php echo $id === $first ? '0' : '-1'; ?>"><?php echo esc_html( $label ); ?></button>
-				<?php endforeach; ?>
-			</div>
-
 			<?php if ( $gal ) : ?>
-				<div role="tabpanel" class="tabpanel" id="images" aria-labelledby="tab-images"<?php echo 'images' === $first ? '' : ' hidden'; ?>>
+				<div class="fiche-gallery" role="region" aria-label="<?php echo esc_attr( 'Images : ' . $title ); ?>">
 					<div class="carousel" data-carousel>
 						<button type="button" class="car-btn prev" aria-label="Image précédente">‹</button>
 						<ul class="car-track" tabindex="0" aria-label="Carrousel d’images">
@@ -90,6 +69,23 @@ brev_pagehead( $title );
 					<p class="car-count" aria-live="polite"></p>
 				</div>
 			<?php endif; ?>
+		</div>
+	</article>
+
+	<?php
+	$tabs = array();
+	if ( $vurl ) {
+		$tabs['video'] = 'Vidéo';
+	}
+	if ( $tabs ) :
+		$first = key( $tabs );
+		?>
+		<section class="medias">
+			<div class="tablist" role="tablist" aria-label="Vidéo">
+				<?php foreach ( $tabs as $id => $label ) : ?>
+					<button type="button" role="tab" class="tab<?php echo $id === $first ? ' on' : ''; ?>" id="tab-<?php echo esc_attr( $id ); ?>" aria-controls="<?php echo esc_attr( $id ); ?>" aria-selected="<?php echo $id === $first ? 'true' : 'false'; ?>" tabindex="<?php echo $id === $first ? '0' : '-1'; ?>"><?php echo esc_html( $label ); ?></button>
+				<?php endforeach; ?>
+			</div>
 
 			<?php if ( $vurl ) : ?>
 				<div role="tabpanel" class="tabpanel" id="video" aria-labelledby="tab-video"<?php echo 'video' === $first ? '' : ' hidden'; ?>>
