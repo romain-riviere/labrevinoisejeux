@@ -25,7 +25,6 @@ Il couvre les festivals (affiches), les jeux de société, les escape box et acc
 
 ```
 brevinoise/          le thème WordPress (c'est ce dossier qui est zippé et installé)
-maquette/            maquette statique d'origine (HTML/JS), voir maquette/README.md
 scripts/             vérifications, tests et publication (voir sections 5 et 6)
   lib/               outils utilisés par les scripts
   docker/            WordPress jetable pour les tests
@@ -336,13 +335,13 @@ Presque tout le thème est piloté par trois listes :
 
 ### Le jeu en ligne Gare au Chacal
 
-`jeux/gare-au-chacal/game.html` est un fichier HTML autonome, partagé avec la maquette. Quand un visiteur ouvre `/jouer/gare-au-chacal/` :
+`jeux/gare-au-chacal/game.html` est un fichier HTML autonome. Quand un visiteur ouvre `/jouer/gare-au-chacal/` :
 
 1. une règle d'adresse (`inc/game.php`) intercepte la page ;
 2. le thème lit `game.html` et remplace `<script src="../../assets/data.js"></script>` par les réglages de l'administration (`window.BREV_GAME_CFG`) ;
 3. il remplace aussi `../../index.html#jeux` par l'adresse de la page des jeux.
 
-Hors WordPress (maquette), le jeu lit `window.BREV_DEFAULTS` et le stockage du navigateur.
+Ouvert directement dans un navigateur (hors WordPress), le jeu utilise ses réglages par défaut intégrés et le stockage du navigateur.
 
 ### Mise à jour automatique
 
@@ -367,22 +366,13 @@ Si `version` est supérieure à la version installée, WordPress propose la mise
 | `assets/admin-*.js`, `assets/admin.css` | sélecteur d'images du jeu, galerie des fiches |
 | `demo/img/` | images du contenu de démonstration |
 
-### La maquette (`maquette/`)
-
-C'est le prototype d'origine, ouvrable sans serveur (`make maquette`). Son administration enregistre les données dans le navigateur.
-
-- `assets/data.js` correspond à `brev_defaults()` et au contenu de démonstration ;
-- `assets/site.js` correspond aux gabarits.
-
-Elle sert de référence pour le rendu attendu, mais n'est pas mise à jour avec le thème.
-
 ## 9. Historique
 
 Les premières versions ont été livrées sous forme de zips. Elles sont reprises comme commits, à la date de chaque zip :
 
 | Tag | Changement |
 |---|---|
-| — | maquette statique |
+| — | maquette statique d'origine (retirée du dépôt ensuite, récupérable dans l'historique Git) |
 | `v1.0.0` | premier thème WordPress |
 | — | encart « Escape Box & accessoires » sur l'accueil (version restée 1.0.0) |
 | — | champ et bouton « Lien vidéo » (version restée 1.0.0) |

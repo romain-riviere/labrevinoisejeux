@@ -1,5 +1,5 @@
 # Raccourcis pour les scripts du thème (voir README.md).
-.PHONY: aide lint compat test test-74 test-83 verifier build site release patch minor major maquette
+.PHONY: aide lint compat test test-74 test-83 verifier build site release patch minor major
 
 aide:
 	@echo "make lint       syntaxe PHP/JS, en-tête, repères du jeu"
@@ -10,7 +10,6 @@ aide:
 	@echo "make build      fabrique dist/brevinoise.zip et l'annonce de mise à jour"
 	@echo "make patch|minor|major   change la version du thème"
 	@echo "make release    vérifie tout puis publie sur GitHub Releases"
-	@echo "make maquette   ouvre la maquette statique dans le navigateur"
 
 lint:
 	@scripts/lint.sh
@@ -39,9 +38,3 @@ patch minor major:
 
 release:
 	@scripts/release.sh
-
-# macOS : open ; Windows (WSL) : explorer.exe ; Linux : xdg-open
-maquette:
-	@if command -v open >/dev/null 2>&1; then open maquette/index.html; \
-	elif command -v explorer.exe >/dev/null 2>&1; then explorer.exe "$$(wslpath -w maquette/index.html)" || true; \
-	else xdg-open maquette/index.html; fi

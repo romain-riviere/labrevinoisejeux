@@ -10,7 +10,6 @@ The WordPress theme **« La Brévinoise »** for the association La Brévinoise 
 
 Layout:
 - `brevinoise/` is the theme itself; this folder is what gets zipped and installed.
-- `maquette/` is the original static mockup.
 - `scripts/` holds the tooling.
 - `dist/` and `.wp-test/` are generated and git-ignored.
 
@@ -112,7 +111,7 @@ Pushing, tagging and publishing are outward-facing actions, so confirm with the 
 - **`inc/game.php`**: the online game « Gare au Chacal ».
   - Settings live in the `brev_gac` option and are edited on the admin page `brev-gac`.
   - The rewrite rule `^jouer/<slug>/` sets the query var `brev_game`. On `template_redirect`, the theme reads `jeux/gare-au-chacal/game.html` and replaces `<script src="../../assets/data.js"></script>` with `window.BREV_GAME_CFG = {...}`. It also replaces the back link `../../index.html#jeux`, then echoes the HTML and exits.
-  - **`game.html` is a standalone file shared with the static mockup.** Keep both placeholder strings exactly as they are, or WordPress injection breaks. Outside WordPress, the game falls back to `window.BREV_DEFAULTS` and localStorage.
+  - **`game.html` is a standalone HTML file.** Keep both placeholder strings exactly as they are, or WordPress injection breaks (`make lint` checks this). Outside WordPress it falls back to built-in defaults and localStorage.
 - **`inc/tools.php`**: the admin page « La Brévinoise : outils » (`brev-tools`). It provides:
   - Demo-content import from `demo/img/`, tracked by the option `brev_demo_done`.
   - JSON export and import of theme mods and `brev_gac`.
@@ -125,15 +124,6 @@ Pushing, tagging and publishing are outward-facing actions, so confirm with the 
 - **Admin JS**: `assets/admin-media.js` is the media picker on the game settings page. `assets/admin-gallery.js` is the gallery field on fiches.
 
 Content and settings are stored in WordPress (CPT posts, theme mods, options), not in the theme. A theme update must never require migrating them, so keep existing option and meta keys stable.
-
-## Static mockup (`maquette/`)
-
-This is an earlier client-side prototype of the same site: open `maquette/index.html` directly (or run `make maquette`), no server needed. It is not kept in sync with the theme. Its pieces line up with the theme as follows:
-- `assets/data.js` (`window.BREV_DEFAULTS`) corresponds to `brev_defaults()` plus the demo content.
-- `assets/admin.js` is a fake admin that stores data in localStorage (`brevinoise-site`).
-- `assets/site.js` renders the pages.
-
-Use it as a reference for intended behaviour and design. The real deliverable is the WordPress theme.
 
 ## Design notes (from the `style.css` header)
 
