@@ -38,15 +38,91 @@ Chaque version publiée porte un tag Git : `v1.0.0`, `v1.1.0`… La version en p
 
 ## 2. Prérequis
 
-| Outil | Pour quoi | Installation (macOS) |
-|---|---|---|
-| Git | historique | déjà présent |
-| **Docker Desktop** | PHP et WordPress pour les tests (rien à installer d'autre) | <https://www.docker.com/products/docker-desktop/> |
-| GitHub CLI (`gh`) | publication | `brew install gh` puis `gh auth login` |
-| `jq`, `zip`, `rsync` | scripts | `brew install jq rsync` si absents |
-| Node.js | vérification JavaScript (sinon via Docker) | facultatif |
+PHP et WordPress tournent dans **Docker** : il n'y a rien d'autre à installer pour eux. Les scripts sont écrits en bash : ils fonctionnent tels quels sur macOS et Linux, et sous Windows dans **WSL 2** (Ubuntu).
 
-Docker Desktop doit être **démarré** avant `make lint`, `make test` ou `make release`.
+| Outil | Pour quoi |
+|---|---|
+| Git | historique |
+| **Docker Desktop** | PHP et WordPress pour les tests |
+| `make`, `jq`, `zip`, `unzip`, `rsync`, `perl` | scripts |
+| GitHub CLI (`gh`) | publication |
+| Node.js | vérification JavaScript (facultatif : Docker prend le relais s'il est absent) |
+
+Docker Desktop doit être **démarré** avant `make lint`, `make test`, `make site` ou `make release`.
+
+### macOS
+
+1. Installer [Homebrew](https://brew.sh) s'il est absent.
+2. Installer [Docker Desktop pour Mac](https://www.docker.com/products/docker-desktop/), le lancer.
+3. Dans un terminal :
+
+   ```sh
+   xcode-select --install          # git, make, zip, perl (si absents)
+   brew install gh jq rsync
+   gh auth login
+   git clone https://github.com/romain-riviere/labrevinoisejeux.git
+   cd labrevinoisejeux
+   ```
+
+### Windows 10 / 11
+
+Tout se fait **dans WSL 2** (un Ubuntu intégré à Windows). Les commandes `make` ne fonctionnent ni dans PowerShell ni dans Git Bash.
+
+1. **Installer WSL 2 et Ubuntu.** Ouvrir PowerShell **en administrateur** :
+
+   ```powershell
+   wsl --install -d Ubuntu
+   ```
+
+   Redémarrer Windows. Au premier lancement d'**Ubuntu** (menu Démarrer), choisir un nom d'utilisateur et un mot de passe Linux.
+
+2. **Installer [Docker Desktop pour Windows](https://www.docker.com/products/docker-desktop/)**, puis :
+   - *Settings › General* : cocher **Use the WSL 2 based engine** ;
+   - *Settings › Resources › WSL integration* : activer **Ubuntu** ;
+   - *Apply & restart*.
+
+   Vérifier dans le terminal Ubuntu : `docker info` doit répondre sans erreur.
+
+3. **Installer les outils**, dans le terminal Ubuntu :
+
+   ```sh
+   sudo apt update
+   sudo apt install -y git make jq zip unzip rsync perl curl
+   ```
+
+4. **Installer GitHub CLI** (publication uniquement), toujours dans Ubuntu :
+
+   ```sh
+   (type -p wget >/dev/null || sudo apt install -y wget) \
+     && sudo mkdir -p -m 755 /etc/apt/keyrings \
+     && wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg >/dev/null \
+     && sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
+     && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null \
+     && sudo apt update && sudo apt install -y gh
+   gh auth login
+   ```
+
+   Méthode officielle, à jour sur <https://github.com/cli/cli/blob/trunk/docs/install_linux.md>.
+
+5. **Configurer Git et cloner le dépôt dans le dossier Linux** (`~`), pas dans `C:\` ni `/mnt/c/…` :
+
+   ```sh
+   git config --global user.name "Prénom Nom"
+   git config --global user.email "adresse@exemple.fr"
+   git config --global core.autocrlf input
+   cd ~
+   git clone https://github.com/romain-riviere/labrevinoisejeux.git
+   cd labrevinoisejeux
+   make lint
+   ```
+
+#### Remarques pour Windows
+
+- **Le dépôt doit être dans `~` (Linux).** Sous `/mnt/c/…`, Docker et les scripts sont très lents et les droits d'exécution des scripts se perdent.
+- **Éditer les fichiers** : avec [VS Code](https://code.visualstudio.com/) et l'extension *WSL*, taper `code .` dans le dossier du dépôt. Les fichiers restent accessibles depuis l'explorateur Windows à l'adresse `\\wsl$\Ubuntu\home\<utilisateur>\labrevinoisejeux`.
+- **Fins de ligne** : le dépôt impose des fins de ligne Unix (fichier `.gitattributes`). Ne pas cloner le dépôt avec Git pour Windows, sinon les scripts échouent avec `$'\r': command not found`. Si cela arrive, recloner depuis Ubuntu.
+- **Site de test** : `make site` est ouvert depuis le navigateur Windows à l'adresse <http://localhost:8083>, sans réglage particulier.
+- **Zip à téléverser** : `dist/brevinoise.zip` se trouve dans `\\wsl$\Ubuntu\home\<utilisateur>\labrevinoisejeux\dist\`. Taper `explorer.exe dist` pour ouvrir ce dossier.
 
 ## 3. Modifier le thème
 

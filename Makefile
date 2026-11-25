@@ -40,5 +40,8 @@ patch minor major:
 release:
 	@scripts/release.sh
 
+# macOS : open ; Windows (WSL) : explorer.exe ; Linux : xdg-open
 maquette:
-	@open maquette/index.html
+	@if command -v open >/dev/null 2>&1; then open maquette/index.html; \
+	elif command -v explorer.exe >/dev/null 2>&1; then explorer.exe "$$(wslpath -w maquette/index.html)" || true; \
+	else xdg-open maquette/index.html; fi

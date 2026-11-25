@@ -1,0 +1,9 @@
+# Fins de ligne LF partout, y compris sous Windows : les scripts bash
+# ne s'exécutent pas avec des fins de ligne CRLF.
+* text=auto eol=lf
+
+# Fichiers binaires (jamais convertis)
+*.webp binary
+*.png  binary
+*.jpg  binary
+*.zip  binary

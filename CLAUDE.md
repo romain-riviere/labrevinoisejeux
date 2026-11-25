@@ -20,6 +20,13 @@ The early history was rebuilt from zip deliveries, one commit per zip, dated fro
 
 Everything runs in Docker, so Docker Desktop must be running. There is no local PHP.
 
+The scripts must run both on macOS (bash 3.2 and BSD tools) and on Windows through WSL 2 Ubuntu (GNU tools):
+- Use `sed -i.bak`, not `sed -i ''`.
+- Do not use `head` in pipes, because `pipefail` turns SIGPIPE into a failure.
+- Do not use GNU-only or BSD-only flags.
+
+`.gitattributes` forces LF line endings.
+
 | Command | What it does |
 |---|---|
 | `make lint` | PHP syntax on 7.4 and 8.3, JS syntax (including the inline scripts of `game.html`), `style.css` header, version in the `brevinoise/README.md` title, `game.html` placeholders, junk files |
