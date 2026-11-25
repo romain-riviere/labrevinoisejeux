@@ -4,7 +4,7 @@ Thème du site de **La Brévinoise Jeux**, section d'édition de jeux de sociét
 
 Il couvre les festivals (affiches), les jeux de société, les escape box et accessoires, les bandes dessinées, les adhérents, la page Contact et le jeu en ligne « Gare au Chacal ». Tout se modifie depuis l'administration WordPress.
 
-- **Pour les personnes qui gèrent le site** (ajouter un jeu, changer un texte…) : voir [`brevinoise/LISEZMOI.txt`](brevinoise/LISEZMOI.txt).
+- **Pour les personnes qui gèrent le site** (ajouter un jeu, changer un texte…) : voir [`brevinoise/README.md`](brevinoise/README.md) (inclus dans le zip du thème).
 - **Ce document** s'adresse à qui modifie le code du thème et publie de nouvelles versions.
 
 ## Sommaire
@@ -25,7 +25,7 @@ Il couvre les festivals (affiches), les jeux de société, les escape box et acc
 
 ```
 brevinoise/          le thème WordPress (c'est ce dossier qui est zippé et installé)
-maquette/            maquette statique d'origine (HTML/JS), ouvrir maquette/index.html
+maquette/            maquette statique d'origine (HTML/JS), voir maquette/README.md
 scripts/             vérifications, tests et publication (voir sections 5 et 6)
   lib/               outils utilisés par les scripts
   docker/            WordPress jetable pour les tests
@@ -76,7 +76,7 @@ Où intervenir selon le besoin :
 | comportement côté navigateur (menu, filtres, carrousel, onglets) | `assets/theme.js` |
 | le jeu Gare au Chacal | `jeux/gare-au-chacal/game.html`, réglages dans `inc/game.php` |
 
-Pensez à mettre à jour `brevinoise/LISEZMOI.txt` si la manière de gérer le site change pour les administrateurs.
+Pensez à mettre à jour `brevinoise/README.md` si la manière de gérer le site change pour les administrateurs.
 
 ## 4. Ne jamais casser le site en production
 
@@ -123,13 +123,13 @@ make minor    # 1.1.3 → 1.2.0 : nouvelle fonction, nouveau champ, nouvelle pag
 make major    # 1.1.3 → 2.0.0 : refonte (toujours compatible avec les contenus existants)
 ```
 
-`make patch|minor|major` met à jour `style.css` et la 1re ligne de `LISEZMOI.txt`.
+`make patch|minor|major` met à jour `style.css` et le titre de `brevinoise/README.md`.
 
 ## 5. Tester
 
 | Commande | Durée | Vérifie |
 |---|---|---|
-| `make lint` | quelques secondes | syntaxe PHP 7.4 et 8.3, JavaScript (y compris le jeu), en-tête du thème, version dans `LISEZMOI.txt`, repères du jeu, fichiers parasites |
+| `make lint` | quelques secondes | syntaxe PHP 7.4 et 8.3, JavaScript (y compris le jeu), en-tête du thème, version dans le titre de `brevinoise/README.md`, repères du jeu, fichiers parasites |
 | `make compat` | quelques secondes | aucun nom de la section 4 retiré depuis la dernière version publiée |
 | `make test` | ~1 min | répétition générale de la mise à jour (ci-dessous), sur PHP 7.4 / WordPress 6.1 puis PHP 8.3 / WordPress récent |
 | `make verifier` | ~1 min | les trois |

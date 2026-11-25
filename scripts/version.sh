@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Change la version du thème (style.css et 1re ligne de LISEZMOI.txt).
+# Change la version du thème (style.css et titre de brevinoise/README.md).
 #
 # WordPress, le cache des navigateurs et la mise à jour automatique se basent
 # sur ce numéro : il doit augmenter à chaque publication.
@@ -37,12 +37,9 @@ fi
 
 # style.css : ligne « Version: »
 sed -i.bak -E "s/^Version:[[:space:]]*.*/Version: $nouvelle/" "$THEME/style.css"
-# LISEZMOI.txt : titre et soulignement de même longueur
-perl -CSD -i.bak -pe '
-	if ($. == 1) { s/version\s+\S+\s*$/version '"$nouvelle"'\n/; $len = length($_) - 1 }
-	elsif ($. == 2 && /^=+$/) { $_ = ("=" x $len) . "\n" }
-' "$THEME/LISEZMOI.txt"
-rm -f "$THEME/style.css.bak" "$THEME/LISEZMOI.txt.bak"
+# README.md du thème : titre « # … — version X.Y.Z »
+perl -CSD -i.bak -pe 'if ($. == 1) { s/version\s+\S+\s*$/version '"$nouvelle"'\n/ }' "$THEME/README.md"
+rm -f "$THEME/style.css.bak" "$THEME/README.md.bak"
 
 [ "$(version_theme)" = "$nouvelle" ] || stop "La version de style.css n'a pas pu être modifiée."
 ok "Version : $actuelle → $nouvelle"

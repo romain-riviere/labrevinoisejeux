@@ -2,7 +2,7 @@
 # Vérifications rapides du thème, sans WordPress :
 #  - syntaxe PHP sur la version minimale (7.4) et récente (8.3) ;
 #  - syntaxe JavaScript (Node, ou Docker si Node est absent) ;
-#  - en-tête de style.css et version identique dans LISEZMOI.txt ;
+#  - en-tête de style.css et version identique dans le titre de brevinoise/README.md ;
 #  - repères du jeu Gare au Chacal remplacés par WordPress (inc/game.php) ;
 #  - pas de fichiers parasites (.DS_Store, __MACOSX…).
 #
@@ -25,8 +25,8 @@ for champ in "Theme Name" "Version" "Requires PHP" "Text Domain"; do
 done
 v="$(version_theme)"
 printf '%s\n' "$v" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$' || echec "Version « $v » invalide (attendu X.Y.Z)"
-head -1 brevinoise/LISEZMOI.txt | grep -q "version $v\$" \
-	|| echec "LISEZMOI.txt : la 1re ligne doit indiquer « version $v » (lancer scripts/version.sh $v)"
+sed -n 1p brevinoise/README.md | grep -q "^# .*version $v\$" \
+	|| echec "brevinoise/README.md : le titre (1re ligne) doit indiquer « version $v » (lancer scripts/version.sh $v)"
 section_ok "Version $v"
 
 for pv in "$PHP_MIN" "$PHP_MAX"; do

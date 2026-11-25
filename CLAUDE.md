@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repository is
 
-The WordPress theme **« La Brévinoise »** for the association La Brévinoise Jeux, a board-game publisher in Saint-Brevin-les-Pins. Everything is in French: UI strings, code comments, PHPDoc, and the readme (`LISEZMOI.txt`). Keep new code and text in French to match.
+The WordPress theme **« La Brévinoise »** for the association La Brévinoise Jeux, a board-game publisher in Saint-Brevin-les-Pins. Everything is in French: UI strings, code comments, PHPDoc, and the READMEs (`README.md` at the root for developers, `brevinoise/README.md` for site admins, shipped inside the theme zip). Keep new code and text in French to match.
 
 `README.md` (in French) is the full developer guide: workflow, compatibility rules, testing, publishing, architecture. Read it before changing scripts or the release process.
 
@@ -22,11 +22,11 @@ Everything runs in Docker, so Docker Desktop must be running. There is no local 
 
 | Command | What it does |
 |---|---|
-| `make lint` | PHP syntax on 7.4 and 8.3, JS syntax (including the inline scripts of `game.html`), `style.css` header, version in `LISEZMOI.txt` line 1, `game.html` placeholders, junk files |
+| `make lint` | PHP syntax on 7.4 and 8.3, JS syntax (including the inline scripts of `game.html`), `style.css` header, version in the `brevinoise/README.md` title, `game.html` placeholders, junk files |
 | `make compat` | `scripts/compat.sh [ref]`: diffs the theme "contract" against the latest tag, fails on any removal |
 | `make test` | `scripts/test-wp.sh --php 7.4` (WordPress 6.1) and `--php 8.3` (recent WordPress): full upgrade rehearsal from the latest tag |
 | `make site` | Same as the test on PHP 8.3, but leaves WordPress running at http://localhost:8083 (admin / admin) |
-| `make patch`, `make minor`, `make major` | `scripts/version.sh`: bumps `style.css` and `LISEZMOI.txt` line 1 |
+| `make patch`, `make minor`, `make major` | `scripts/version.sh`: bumps `style.css` and the `brevinoise/README.md` title |
 | `make build` | `dist/brevinoise.zip`, `dist/brevinoise-X.Y.Z.zip` and `dist/brevinoise-update.json`, built with `git archive` from **committed** files (`--local` builds the working tree instead) |
 | `make release` | Runs all of the above, asks for confirmation, then tags, pushes and runs `gh release create`. It refuses to run if the GitHub repo is not public |
 
