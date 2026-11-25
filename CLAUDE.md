@@ -6,31 +6,85 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 The WordPress theme **« La Brévinoise »** for the association La Brévinoise Jeux, a board-game publisher in Saint-Brevin-les-Pins. Everything is in French: UI strings, code comments, PHPDoc, and the readme (`LISEZMOI.txt`). Keep new code and text in French to match.
 
-This is **not a git repo and has no unpacked source tree**. The working directory only holds zip snapshots, one per iteration. Each one is named after the change it introduced:
+`README.md` (in French) is the full developer guide: workflow, compatibility rules, testing, publishing, architecture. Read it before changing scripts or the release process.
 
-| Zip | Theme `Version:` |
+Layout:
+- `brevinoise/` is the theme itself; this folder is what gets zipped and installed.
+- `maquette/` is the original static mockup.
+- `scripts/` holds the tooling.
+- `dist/` and `.wp-test/` are generated and git-ignored.
+
+The early history was rebuilt from zip deliveries, one commit per zip, dated from the zip. Released versions are tagged `vX.Y.Z`. **The latest tag is the version running in production**, and it is the baseline for every compatibility check. The original `*.zip` files are git-ignored and are not a source of truth any more.
+
+## Commands
+
+Everything runs in Docker, so Docker Desktop must be running. There is no local PHP.
+
+| Command | What it does |
 |---|---|
-| `brevinoise.zip`, `brevinoise encart escape.zip`, `brevinoise bouton vidéo.zip` | 1.0.0 |
-| `brevinoise pages jeux.zip` | 1.1.0 |
-| `brevinoise carrousel a droite.zip` | 1.1.1 |
-| `brevinoise redimension images carrousel.zip` | 1.1.2 |
-| `brevinoise etiquettes gauche.zip` | 1.1.3 (latest) |
-| `Site La Brevinoise visualisateur.zip` | Static HTML/JS mockup (v1.2.0 of the mockup), predates the theme |
+| `make lint` | PHP syntax on 7.4 and 8.3, JS syntax (including the inline scripts of `game.html`), `style.css` header, version in `LISEZMOI.txt` line 1, `game.html` placeholders, junk files |
+| `make compat` | `scripts/compat.sh [ref]`: diffs the theme "contract" against the latest tag, fails on any removal |
+| `make test` | `scripts/test-wp.sh --php 7.4` (WordPress 6.1) and `--php 8.3` (recent WordPress): full upgrade rehearsal from the latest tag |
+| `make site` | Same as the test on PHP 8.3, but leaves WordPress running at http://localhost:8083 (admin / admin) |
+| `make patch`, `make minor`, `make major` | `scripts/version.sh`: bumps `style.css` and `LISEZMOI.txt` line 1 |
+| `make build` | `dist/brevinoise.zip`, `dist/brevinoise-X.Y.Z.zip` and `dist/brevinoise-update.json`, built with `git archive` from **committed** files (`--local` builds the working tree instead) |
+| `make release` | Runs all of the above, asks for confirmation, then tags, pushes and runs `gh release create`. It refuses to run if the GitHub repo is not public |
 
-The latest snapshot is the one with the highest `Version:` in `brevinoise/style.css`. File mtimes are not reliable for this. To work on the theme, unzip the latest snapshot into a scratch directory, edit it there, and re-zip it as a **new** snapshot. Do not overwrite existing zips.
+Useful flags:
+- `scripts/test-wp.sh --depuis v1.1.0` starts the rehearsal from another version.
+- `--garder` keeps the site running after the test.
+- On failure, the snapshot diff is in `.wp-test/differences.txt`.
 
-- Each theme zip must contain a single top-level folder `brevinoise/`, because WordPress installs it as the theme directory.
-- For the build that will be uploaded to WordPress, the file must be named `brevinoise.zip` (Apparence › Thèmes › Téléverser › « Remplacer l'actuel »).
-- Find the version with: `unzip -p "<zip>" brevinoise/style.css | grep -m1 '^Version'`
+### How the safety net works
+- **`scripts/lib/contrat.php`** loads `inc/*.php` with stub WordPress functions. It does not need a database. It prints every name that links the theme to stored data:
+  - post types and their slugs;
+  - `_brev_*` meta keys;
+  - `brev_*` theme mods;
+  - options;
+  - nav menu location;
+  - rewrite rules and query vars;
+  - Gare au Chacal setting, bot and card keys;
+  - page templates.
 
-There is no build step, linter, test suite, or local PHP/WP-CLI. You can only verify changes in a real WordPress install (WP ≥ 6.0, PHP ≥ 7.4).
+  It also fails if a Customizer setting has no entry in `brev_defaults()`. If you add a new kind of persisted name, extend this script.
+- **`scripts/test-wp.sh`** runs these steps in order:
+  1. installs the tagged version;
+  2. fills the site with `scripts/lib/wp-donnees.php`, which seeds "TEST" marker values;
+  3. snapshots it with `scripts/lib/wp-instantane.php`, including field values as the meta-box form would read them;
+  4. upgrades through the theme's own `brev_check_update()`, using a fake release server (`maj` service in `scripts/docker/compose.yml`);
+  5. diffs the snapshots and crawls every public URL;
+  6. greps `debug.log` for errors coming from the theme.
+
+  If the version wasn't bumped, it force-installs instead and warns.
+
+## Never break production data
+
+A theme update replaces only the `brevinoise/` folder. Posts, meta, theme mods, options and menus stay in the database, and they are linked to the theme **by name**. If you rename or remove a post type, slug, `_brev_*` field, `brev_*` setting, option, bot or card key, menu location, page template or `/jouer/` route, that content is orphaned silently. It also gets wiped the next time the post is saved.
+
+- Adding is always fine.
+- Changing labels is fine, because only the array keys matter.
+- To retire a field, keep it declared and stop displaying it.
+
+`make compat` and `make test` enforce these rules. Never bypass them by moving tags.
+
+The theme folder and slug must stay `brevinoise`, because theme mods are stored under `theme_mods_brevinoise`.
 
 ## Bump the version on every release
 
-`BREV_VERSION` is read from the `Version:` header in `style.css`. Three things depend on it:
+Use `make patch`, `make minor` or `make major`. Historically the version was sometimes not bumped, and `make release` now refuses that. `BREV_VERSION` is read from the `Version:` header in `style.css`. Three things depend on it:
 - It is the cache-busting `ver` for every enqueued CSS and JS file.
 - `brev_maybe_flush()` (`inc/setup.php`) flushes rewrite rules when the version changes. New CPT slugs or `/jouer/` routes only take effect after a bump.
 - `brev_check_update()` (`inc/tools.php`) offers an auto-update when a remote JSON at `brev_update_url` has a higher `version` and a `package` URL.
+
+## Publishing
+
+Releases go to GitHub Releases on `romain-riviere/labrevinoisejeux`; override with the `DEPOT_GITHUB` environment variable.
+
+- The production site's `brev_update_url` points to `…/releases/latest/download/brevinoise-update.json`. Every release must therefore attach `brevinoise-update.json` alongside `brevinoise-X.Y.Z.zip`.
+- WordPress downloads those files anonymously, so the repo must be public.
+- The manual fallback is to upload `dist/brevinoise.zip` and choose « Remplacer l'actuel ».
+
+Pushing, tagging and publishing are outward-facing actions, so confirm with the user before running `make release`.
 
 ## Theme architecture (`brevinoise/`)
 
@@ -65,9 +119,9 @@ There is no build step, linter, test suite, or local PHP/WP-CLI. You can only ve
 
 Content and settings are stored in WordPress (CPT posts, theme mods, options), not in the theme. A theme update must never require migrating them, so keep existing option and meta keys stable.
 
-## Static mockup (`Site La Brevinoise visualisateur.zip`)
+## Static mockup (`maquette/`)
 
-This is an earlier client-side prototype of the same site: open `index.html` directly, no server needed. Its pieces line up with the theme as follows:
+This is an earlier client-side prototype of the same site: open `maquette/index.html` directly (or run `make maquette`), no server needed. It is not kept in sync with the theme. Its pieces line up with the theme as follows:
 - `assets/data.js` (`window.BREV_DEFAULTS`) corresponds to `brev_defaults()` plus the demo content.
 - `assets/admin.js` is a fake admin that stores data in localStorage (`brevinoise-site`).
 - `assets/site.js` renders the pages.
