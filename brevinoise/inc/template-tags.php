@@ -120,7 +120,7 @@ function brev_card( $p, $is_new = false ) {
 	if ( $link || $play || $video ) {
 		echo '<div class="cbtns">';
 		if ( $link ) {
-			echo '<a class="btn sm" href="' . esc_url( $link ) . '" target="_blank" rel="noopener">' . esc_html( brev_mod( 'item_btn' ) ) . ' →</a>';
+			echo '<a class="btn sm shop" href="' . esc_url( $link ) . '" target="_blank" rel="noopener">' . esc_html( brev_mod( 'item_btn' ) ) . ' →</a>';
 		}
 		if ( $play ) {
 			echo '<a class="btn sm play" href="' . esc_url( $play ) . '">▶ ' . esc_html( brev_mod( 'play_btn' ) ) . '</a>';

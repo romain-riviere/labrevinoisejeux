@@ -41,7 +41,7 @@ brev_pagehead( $title );
 			<?php endif; ?>
 			<div class="cbtns">
 				<?php if ( $link ) : ?>
-					<a class="btn" href="<?php echo esc_url( $link ); ?>" target="_blank" rel="noopener"><?php echo esc_html( brev_mod( 'item_btn' ) ); ?> →</a>
+					<a class="btn shop" href="<?php echo esc_url( $link ); ?>" target="_blank" rel="noopener"><?php echo esc_html( brev_mod( 'item_btn' ) ); ?> →</a>
 				<?php endif; ?>
 				<?php if ( $play ) : ?>
 					<a class="btn play" href="<?php echo esc_url( $play ); ?>">▶ <?php echo esc_html( brev_mod( 'play_btn' ) ); ?></a>

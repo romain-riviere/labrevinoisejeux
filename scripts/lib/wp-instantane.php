@@ -20,6 +20,10 @@ $snap  = array(
 	'adresses' => array(),
 );
 
+/* WordPress ajoute lui-même custom_css_post_id aux réglages au premier changement
+   de thème : ce n'est pas une donnée du thème, on l'ignore. */
+unset( $snap['reglages']['custom_css_post_id'] );
+
 foreach ( get_posts( array( 'post_type' => $types, 'post_status' => 'any', 'numberposts' => -1, 'orderby' => 'ID', 'order' => 'ASC' ) ) as $p ) {
 	$meta = array();
 	foreach ( get_post_meta( $p->ID ) as $k => $v ) {

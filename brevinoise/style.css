@@ -3,7 +3,7 @@ Theme Name: La Brévinoise
 Theme URI: https://www.labrevinoise.fr/
 Author: La Brévinoise Jeux
 Description: Thème de l'association La Brévinoise Jeux : festivals (affiches), jeux de société, Escape Box & accessoires, bandes dessinées, adhérents, page contact et jeu en ligne « Gare au Chacal ». Tout se modifie depuis l'administration (Personnaliser, Menus, fiches, page Gare au Chacal).
-Version: 1.1.3
+Version: 1.2.0
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -45,10 +45,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 @media(max-width:1060px){.nav{justify-content:flex-end}.burger{display:block}.menu{display:none;position:absolute;top:100%;left:0;right:0;background:var(--primary);padding:8px 16px 16px}.menu.open{display:block}.menu-list{flex-direction:column;align-items:stretch}}
 /* accueil */
 .hero{background:var(--soft)}
-.hero .wrap{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(24px,4vw,56px);align-items:center}
-.hero .art img{width:100%;border-radius:20px;box-shadow:0 18px 40px rgba(0,17,72,.22);aspect-ratio:1;object-fit:cover}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,3fr);gap:clamp(24px,4vw,56px);align-items:center}
+.hero .art img{width:100%;border-radius:20px;box-shadow:0 18px 40px rgba(0,17,72,.22);height:auto;object-fit:contain}
 .hero p{font-size:18px;max-width:62ch}
-@media(max-width:760px){.hero .wrap{grid-template-columns:minmax(0,1fr)}.hero .art img{aspect-ratio:4/3}}
+@media(max-width:760px){.hero .wrap{grid-template-columns:minmax(0,1fr)}}
 .btn{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:0 22px;border-radius:999px;background:var(--primary);color:#fff;font-weight:800;text-decoration:none;border:0;cursor:pointer;font-size:16px;margin:4px 6px 4px 0}
 .btn.alt{background:transparent;color:var(--ink);border:2px solid currentColor}
 .btn:hover{filter:brightness(1.12)}
@@ -94,7 +94,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 .phead img,.phead .avatar{width:72px;height:72px;border-radius:50%;object-fit:cover;flex:none;font-size:28px}
 .pclose{position:absolute;top:10px;right:10px;width:40px;height:40px;border-radius:50%;border:0;background:var(--soft);color:var(--ink);font-size:18px;cursor:pointer}
 .btn.sm{min-height:42px;padding:0 16px;font-size:15px;margin:0}
-.btn.play{background:var(--accent);color:#14213d}
+.btn.shop,.btn.play{background:var(--accent);color:#14213d}
 .btn.video{background:var(--dark);color:#fff}
 .cbtns{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .card>a{display:block;color:inherit}
