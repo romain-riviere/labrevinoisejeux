@@ -38,7 +38,7 @@ php_run() {
 
 # Version déclarée dans style.css d'un dossier de thème (par défaut : brevinoise/).
 version_theme() {
-	sed -n 's/^Version:[[:space:]]*//p' "${1:-$THEME}/style.css" | head -1 | tr -d '[:space:]'
+	sed -n 's/^Version:[[:space:]]*//p' "${1:-$THEME}/style.css" | sed -n 1p | tr -d '[:space:]'
 }
 
 # Dernier tag de version publié (vX.Y.Z), vide s'il n'y en a pas.
