@@ -1,0 +1,58 @@
+# Site WordPress jetable pour scripts/test-wp.sh (base en mémoire, effacée à l'arrêt).
+#   wp  : WordPress + Apache, http://localhost:${PORT}
+#   cli : WP-CLI sur les mêmes fichiers
+#   maj : petit serveur web qui joue le rôle de GitHub Releases (annonce + zip)
+#   db  : MariaDB
+
+x-db-env: &db-env
+  WORDPRESS_DB_HOST: db
+  WORDPRESS_DB_USER: wp
+  WORDPRESS_DB_PASSWORD: wp
+  WORDPRESS_DB_NAME: wp
+  WORDPRESS_DEBUG: "1"
+  WORDPRESS_CONFIG_EXTRA: |
+    define( 'WP_DEBUG_LOG', '/var/www/html/wp-content/debug.log' );
+    define( 'WP_DEBUG_DISPLAY', false );
+    define( 'FS_METHOD', 'direct' );
+    define( 'DISABLE_WP_CRON', true );
+
+services:
+  db:
+    image: mariadb:11
+    environment:
+      MARIADB_DATABASE: wp
+      MARIADB_USER: wp
+      MARIADB_PASSWORD: wp
+      MARIADB_ROOT_PASSWORD: root
+    tmpfs:
+      - /var/lib/mysql
+
+  wp:
+    image: wordpress:php${PHPV:-8.3}-apache
+    depends_on: [db]
+    ports:
+      - "${PORT:-8089}:80"
+    environment: *db-env
+    volumes:
+      - site:/var/www/html
+
+  cli:
+    image: wordpress:cli-php${PHPV:-8.3}
+    user: "33:33"
+    depends_on: [wp]
+    command: ["sleep", "infinity"]
+    environment:
+      <<: *db-env
+      WP_CLI_CACHE_DIR: /tmp/wp-cli-cache
+    volumes:
+      - site:/var/www/html
+      - ../lib:/scripts:ro
+      - ../../.wp-test:/test:ro
+
+  maj:
+    image: httpd:2.4-alpine
+    volumes:
+      - ../../.wp-test/maj:/usr/local/apache2/htdocs:ro
+
+volumes:
+  site:
