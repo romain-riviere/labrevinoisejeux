@@ -143,13 +143,13 @@ Où intervenir selon le besoin :
 
 | Je veux… | Fichier(s) |
 |---|---|
-| ajouter un champ à une fiche (jeu, BD, festival…) | `inc/defaults.php` → `brev_types()`, champ `fields` |
-| ajouter un texte réglable dans Personnaliser | `inc/defaults.php` → `brev_defaults()` **et** `inc/customizer.php` |
-| changer l'affichage d'une carte ou d'une fenêtre d'infos | `inc/template-tags.php` |
+| ajouter un champ à une fiche (jeu, BD, festival…) | `inc/core/defaults.php` → `brev_types()`, champ `fields` |
+| ajouter un texte réglable dans Personnaliser | `inc/core/defaults.php` → `brev_defaults()` **et** `inc/admin/customizer.php` |
+| changer l'affichage d'une carte ou d'une fenêtre d'infos | `inc/content/template-tags.php` |
 | changer la page d'accueil, une page de liste, une fiche | `front-page.php`, `archive.php`, `single-fiche.php` |
 | changer les styles | `style.css` (couleurs : variables `--primary`, `--dark`, `--accent`, `--soft`) |
-| comportement côté navigateur (menu, filtres, carrousel, onglets) | `assets/theme.js` |
-| le jeu Gare au Chacal | `jeux/gare-au-chacal/game.html`, réglages dans `inc/game.php` |
+| comportement côté navigateur (menu, filtres, carrousel, onglets) | `assets/js/theme.js` |
+| le jeu Gare au Chacal | `jeux/gare-au-chacal/game.html`, réglages dans `inc/features/game.php` |
 
 Pensez à mettre à jour `brevinoise/README.md` si la manière de gérer le site change pour les administrateurs.
 
@@ -299,7 +299,33 @@ Tant que le dépôt est privé ou qu'aucune release n'est publiée, cette adress
 
 ## 8. Architecture du thème
 
-`functions.php` définit trois constantes et charge les fichiers de `inc/` dans l'ordre :
+### Plan du dossier `brevinoise/`
+
+```
+brevinoise/
+├── style.css              styles du site + en-tête du thème (nom, version)
+├── functions.php          constantes + chargement de inc/
+├── header.php, footer.php, index.php
+├── front-page.php         accueil
+├── archive.php            pages de liste des cinq types
+├── single-fiche.php       présentation d'un jeu, d'une BD, d'une escape box
+├── template-contact.php   modèle de la page Contact
+├── inc/                   le code PHP, rangé par rôle
+│   ├── core/              socle : defaults.php (registre central), setup.php
+│   ├── content/           types de contenu (post-types.php) et affichage (template-tags.php)
+│   ├── features/          fonctionnalités : contact.php, game.php
+│   └── admin/             administration : customizer.php, tools.php
+├── assets/
+│   ├── css/               admin.css
+│   ├── js/                theme.js (site), admin-gallery.js, admin-media.js (administration)
+│   └── img/               logo et image d'accueil par défaut
+├── jeux/gare-au-chacal/   le jeu en ligne (game.html)
+└── demo/img/              images du contenu de démonstration
+```
+
+Les gabarits WordPress (`front-page.php`, `archive.php`, `single-fiche.php`, `template-contact.php`, `header.php`…) restent à la racine du thème : WordPress les cherche à cet endroit, et le nom `template-contact.php` est enregistré en base pour la page Contact. Tout le reste est rangé par rôle.
+
+`functions.php` définit trois constantes et charge les fichiers de `inc/` dans l'ordre (`core/defaults.php` d'abord) :
 
 - `BREV_VERSION` : lue dans l'en-tête de `style.css` ;
 - `BREV_DIR` : chemin du thème ;
@@ -307,7 +333,7 @@ Tant que le dépôt est privé ou qu'aucune release n'est publiée, cette adress
 
 Toutes les fonctions du thème commencent par `brev_`.
 
-### `inc/defaults.php` : le registre central
+### `inc/core/defaults.php` : le registre central
 
 Presque tout le thème est piloté par trois listes :
 
@@ -318,26 +344,26 @@ Presque tout le thème est piloté par trois listes :
   - les colonnes de la liste dans l'administration ;
   - l'import de démonstration.
 
-  Types de champs disponibles : `text`, `url`, `games`, `gallery`, `play`, `kind`. Un nouveau type demande de compléter l'affichage et l'enregistrement dans `inc/post-types.php`.
+  Types de champs disponibles : `text`, `url`, `games`, `gallery`, `play`, `kind`. Un nouveau type demande de compléter l'affichage et l'enregistrement dans `inc/content/post-types.php`.
 - **`brev_nav_games()`** : les jeux jouables dans le navigateur, fournis dans `jeux/`.
 
 ### Autres fichiers de `inc/`
 
 | Fichier | Rôle |
 |---|---|
-| `setup.php` | fonctions WordPress du thème, styles et scripts, couleurs Personnaliser injectées en variables CSS, ordre d'affichage (champ « Ordre » puis plus récent), recalcul des adresses à chaque changement de version, menu |
-| `post-types.php` | types de contenu, formulaire « Informations », enregistrement des champs, éditeur classique forcé |
-| `customizer.php` | panneau « La Brévinoise » de Personnaliser ; chaque clé doit exister dans `brev_defaults()` (vérifié par `make lint`) |
-| `template-tags.php` | fonctions d'affichage : cartes, fenêtres d'infos, en-têtes de page, galerie, lecteur vidéo ; renvoie les fiches jeu / escape / BD vers `single-fiche.php` |
-| `contact.php` | envoi du formulaire de contact par e-mail (jeton de sécurité, champ piège anti-robots `site_web`) |
-| `game.php` | page d'administration « Gare au Chacal » (option `brev_gac`) et affichage public du jeu |
-| `tools.php` | page « La Brévinoise : outils » : import de démo, export / import des réglages, adresse et vérification des mises à jour |
+| `core/setup.php` | fonctions WordPress du thème, styles et scripts, couleurs Personnaliser injectées en variables CSS, ordre d'affichage (champ « Ordre » puis plus récent), recalcul des adresses à chaque changement de version, menu |
+| `content/post-types.php` | types de contenu, formulaire « Informations », enregistrement des champs, éditeur classique forcé |
+| `admin/customizer.php` | panneau « La Brévinoise » de Personnaliser ; chaque clé doit exister dans `brev_defaults()` (vérifié par `make lint`) |
+| `content/template-tags.php` | fonctions d'affichage : cartes, fenêtres d'infos, en-têtes de page, galerie, lecteur vidéo ; renvoie les fiches jeu / escape / BD vers `single-fiche.php` |
+| `features/contact.php` | envoi du formulaire de contact par e-mail (jeton de sécurité, champ piège anti-robots `site_web`) |
+| `features/game.php` | page d'administration « Gare au Chacal » (option `brev_gac`) et affichage public du jeu |
+| `admin/tools.php` | page « La Brévinoise : outils » : import de démo, export / import des réglages, adresse et vérification des mises à jour |
 
 ### Le jeu en ligne Gare au Chacal
 
 `jeux/gare-au-chacal/game.html` est un fichier HTML autonome. Quand un visiteur ouvre `/jouer/gare-au-chacal/` :
 
-1. une règle d'adresse (`inc/game.php`) intercepte la page ;
+1. une règle d'adresse (`inc/features/game.php`) intercepte la page ;
 2. le thème lit `game.html` et remplace `<script src="../../assets/data.js"></script>` par les réglages de l'administration (`window.BREV_GAME_CFG`) ;
 3. il remplace aussi `../../index.html#jeux` par l'adresse de la page des jeux.
 
@@ -345,7 +371,7 @@ Ouvert directement dans un navigateur (hors WordPress), le jeu utilise ses régl
 
 ### Mise à jour automatique
 
-`brev_check_update()` (`inc/tools.php`) s'accroche à la vérification des mises à jour de WordPress. Elle lit le JSON dont l'adresse est enregistrée dans l'option `brev_update_url` :
+`brev_check_update()` (`inc/admin/tools.php`) s'accroche à la vérification des mises à jour de WordPress. Elle lit le JSON dont l'adresse est enregistrée dans l'option `brev_update_url` :
 
 ```json
 { "version": "1.2.0", "package": "https://…/brevinoise-1.2.0.zip", "url": "https://…" }
@@ -362,8 +388,8 @@ Si `version` est supérieure à la version installée, WordPress propose la mise
 | `single-fiche.php` | page de présentation d'un jeu, d'une BD ou d'une escape box : image, étiquettes, boutons, carrousel, onglet vidéo |
 | `template-contact.php` | modèle de page « Contact » |
 | `header.php`, `footer.php`, `index.php` | en-tête, pied de page, gabarit de secours |
-| `assets/theme.js` | JavaScript sans dépendance : menu mobile, recherche et filtres, fenêtres d'infos (contenu dans des `<template id="pop-…">`), carrousels `[data-carousel]`, onglets |
-| `assets/admin-*.js`, `assets/admin.css` | sélecteur d'images du jeu, galerie des fiches |
+| `assets/js/theme.js` | JavaScript sans dépendance : menu mobile, recherche et filtres, fenêtres d'infos (contenu dans des `<template id="pop-…">`), carrousels `[data-carousel]`, onglets |
+| `assets/js/admin-*.js`, `assets/css/admin.css` | sélecteur d'images du jeu, galerie des fiches |
 | `demo/img/` | images du contenu de démonstration |
 
 ## 9. Historique

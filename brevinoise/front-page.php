@@ -18,13 +18,16 @@ $blocks  = array(
 );
 ?>
 <div class="band hero"><div class="wrap">
-	<div class="art"><img src="<?php echo esc_url( $hero ); ?>" alt=""></div>
+	<h1 class="hero-title"><?php echo esc_html( brev_mod( 'hero_title' ) ); ?></h1>
 	<div>
-		<h1><?php echo esc_html( brev_mod( 'hero_title' ) ); ?></h1>
 		<p><?php echo esc_html( brev_mod( 'hero_text1' ) ); ?></p>
 		<?php if ( brev_mod( 'hero_text2' ) ) : ?><p><?php echo esc_html( brev_mod( 'hero_text2' ) ); ?></p><?php endif; ?>
 		<?php if ( brev_mod( 'hero_btn1_label' ) ) : ?><a class="btn" href="<?php echo esc_url( $btn1 ); ?>"><?php echo esc_html( brev_mod( 'hero_btn1_label' ) ); ?></a><?php endif; ?>
 		<?php if ( brev_mod( 'hero_btn2_label' ) ) : ?><a class="btn alt" href="<?php echo esc_url( $btn2 ); ?>"><?php echo esc_html( brev_mod( 'hero_btn2_label' ) ); ?></a><?php endif; ?>
+	</div>
+	<div class="art">
+		<?php if ( brev_mod( 'hero_art_label' ) ) : ?><p class="art-label"><?php echo esc_html( brev_mod( 'hero_art_label' ) ); ?></p><?php endif; ?>
+		<img src="<?php echo esc_url( $hero ); ?>" alt="">
 	</div>
 </div></div>
 <?php foreach ( $blocks as $k => $b ) : ?>

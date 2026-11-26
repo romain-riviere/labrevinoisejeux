@@ -51,7 +51,8 @@ La page **Apparence › La Brévinoise : outils** permet aussi d'exporter et d'i
 |---|---|
 | `style.css` | styles du site (et en-tête du thème) |
 | `functions.php` | chargement des fonctions (dossier `inc/`) |
-| `inc/` | types de contenu, Personnaliser, contact, jeu, outils et mises à jour |
+| `inc/` | le code, rangé par rôle : `core/` (socle), `content/` (types de contenu, affichage), `features/` (contact, jeu), `admin/` (Personnaliser, outils et mises à jour) |
+| `assets/` | scripts (`js/`), styles de l'administration (`css/`) et images du thème (`img/`) |
 | `front-page.php` | page d'accueil |
 | `archive.php` | pages Festivals, Jeux, Escape Box, BD, Adhérents |
 | `single-fiche.php` | page de présentation d'un jeu, d'une BD ou d'une escape box |

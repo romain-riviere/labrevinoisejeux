@@ -85,7 +85,12 @@ class WP_Customize_Image_Control extends WP_Customize_Control {}
 
 /* ----- Chargement du thème ----- */
 
-foreach ( glob( $theme . '/inc/*.php' ) as $f ) {
+/*
+ * Fichiers de inc/ : à plat (versions ≤ 1.2.0) ou rangés en sous-dossiers (core/, content/…).
+ * Les deux organisations doivent être lisibles, car on compare avec le dernier tag publié.
+ */
+$inc_files = array_merge( glob( $theme . '/inc/*.php' ), glob( $theme . '/inc/*/*.php' ) );
+foreach ( $inc_files as $f ) {
 	require_once $f;
 }
 
@@ -178,7 +183,7 @@ if ( $need( 'brev_gac_register' ) ) {
 	brev_gac_register();
 }
 $options = $GLOBALS['brev_rec']['settings'];
-$files   = array_merge( glob( $theme . '/*.php' ), glob( $theme . '/inc/*.php' ) );
+$files   = array_merge( glob( $theme . '/*.php' ), $inc_files );
 foreach ( $files as $f ) {
 	if ( preg_match_all( "~_option\(\s*'(brev_[a-z0-9_]+)'~", file_get_contents( $f ), $m ) ) {
 		$options = array_merge( $options, $m[1] );

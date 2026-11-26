@@ -127,7 +127,7 @@ function brev_gac_menu() {
 		'admin_print_scripts-' . $hook,
 		function () {
 			wp_enqueue_media();
-			wp_enqueue_script( 'brev-admin-media', BREV_URI . '/assets/admin-media.js', array( 'jquery' ), BREV_VERSION, true );
+			wp_enqueue_script( 'brev-admin-media', BREV_URI . '/assets/js/admin-media.js', array( 'jquery' ), BREV_VERSION, true );
 		}
 	);
 }

@@ -140,11 +140,11 @@ visiter() { # visiter <adresse> [texte attendu…]
 }
 n=0
 for u in $(jq -r '.adresses[]' "$TEST/apres.json"); do visiter "$u"; n=$((n + 1)); done
-visiter "$url/" "Titre accueil TEST" "--primary:#123456" "--logo:120px" "Mentions TEST"
-visiter "$url/jeux/" "Surf and Cats" "Mentions TEST"
+visiter "$url/" "Des jeux drôles, rapides et fédérateurs, créés à Saint-Mars-De-Coutais TEST" "--primary:#11336a" "--logo:96px" "© La Brévinoise Jeux TEST"
+visiter "$url/jeux/" "Les jeux" "© La Brévinoise Jeux TEST"
 visiter "$(jq -r '.fiches[] | select(.titre == "Surf and Cats") | .adresse' "$TEST/apres.json")" "Étiquette TEST" "TESTvideo01"
 visiter "$url/jouer/gare-au-chacal/" "BREV_GAME_CFG" "NicoTEST" "Bravo TEST"
-visiter "$url/contact/" "Écrivez-nous TEST"
+visiter "$url/contact/" "Une question sur nos jeux, une commande pour votre boutique ou une animation pour votre événement ? Écrivez-nous. TEST"
 [ "$echecs" -eq 0 ] && ok "$n pages visitées, textes personnalisés présents"
 
 etape "Journal d'erreurs PHP"

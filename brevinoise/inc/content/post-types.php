@@ -210,11 +210,11 @@ add_action( 'admin_enqueue_scripts', 'brev_admin_assets' );
  * Petits styles de l'administration.
  */
 function brev_admin_assets() {
-	wp_enqueue_style( 'brev-admin', BREV_URI . '/assets/admin.css', array(), BREV_VERSION );
+	wp_enqueue_style( 'brev-admin', BREV_URI . '/assets/css/admin.css', array(), BREV_VERSION );
 	$screen = get_current_screen();
 	if ( $screen && 'post' === $screen->base && in_array( $screen->post_type, wp_list_pluck( brev_types(), 'pt' ), true ) ) {
 		wp_enqueue_media();
-		wp_enqueue_script( 'brev-admin-gallery', BREV_URI . '/assets/admin-gallery.js', array( 'jquery' ), BREV_VERSION, true );
+		wp_enqueue_script( 'brev-admin-gallery', BREV_URI . '/assets/js/admin-gallery.js', array( 'jquery' ), BREV_VERSION, true );
 	}
 }
 

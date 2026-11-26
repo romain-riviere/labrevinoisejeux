@@ -67,8 +67,9 @@ function brev_customize( $c ) {
 
 	/* Accueil */
 	$c->add_section( 'brev_home', array( 'title' => "Page d'accueil", 'panel' => 'brev' ) );
-	$add( 'brev_home', 'hero_image', 'Image de gauche', 'image' );
-	$add( 'brev_home', 'hero_title', 'Titre' );
+	$add( 'brev_home', 'hero_title', 'Titre (centré, au-dessus)' );
+	$add( 'brev_home', 'hero_image', 'Image de droite', 'image' );
+	$add( 'brev_home', 'hero_art_label', "Texte au-dessus de l'image", 'text', 'Bandeau blanc sur fond de la couleur principale. Vide = pas de bandeau.' );
 	$add( 'brev_home', 'hero_text1', 'Paragraphe 1', 'textarea' );
 	$add( 'brev_home', 'hero_text2', 'Paragraphe 2', 'textarea' );
 	$add( 'brev_home', 'hero_btn1_label', 'Texte du 1er bouton' );

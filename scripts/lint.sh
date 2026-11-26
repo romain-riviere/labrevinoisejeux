@@ -3,7 +3,7 @@
 #  - syntaxe PHP sur la version minimale (7.4) et récente (8.3) ;
 #  - syntaxe JavaScript (Node, ou Docker si Node est absent) ;
 #  - en-tête de style.css et version identique dans le titre de brevinoise/README.md ;
-#  - repères du jeu Gare au Chacal remplacés par WordPress (inc/game.php) ;
+#  - repères du jeu Gare au Chacal remplacés par WordPress (inc/features/game.php) ;
 #  - pas de fichiers parasites (.DS_Store, __MACOSX…).
 #
 # Usage : scripts/lint.sh
@@ -66,8 +66,8 @@ section_ok "JavaScript valide"
 
 section "Jeu Gare au Chacal : repères remplacés par WordPress"
 for repere in '<script src="../../assets/data.js"></script>' '../../index.html#jeux'; do
-	grep -qF "$repere" "$jeu" || echec "$jeu : repère « $repere » introuvable (inc/game.php ne pourra plus injecter les réglages)"
-	grep -qF "$repere" brevinoise/inc/game.php || echec "inc/game.php ne remplace plus « $repere »"
+	grep -qF "$repere" "$jeu" || echec "$jeu : repère « $repere » introuvable (inc/features/game.php ne pourra plus injecter les réglages)"
+	grep -qF "$repere" brevinoise/inc/features/game.php || echec "inc/features/game.php ne remplace plus « $repere »"
 done
 section_ok "Repères présents"
 

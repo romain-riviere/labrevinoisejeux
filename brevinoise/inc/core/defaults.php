@@ -27,6 +27,7 @@ function brev_defaults() {
 		'play_btn'         => 'Tester le jeu',
 		'video_btn'        => 'Voir la vidéo',
 		'hero_image'       => '',
+		'hero_art_label'   => 'Newsletter Novembre 2026',
 		'hero_title'       => 'Des jeux drôles, rapides et fédérateurs, créés à Saint-Brevin',
 		'hero_text1'       => "La Brévinoise Jeux est la section spécialisée dans l'édition de jeux de société de l'association culturelle La Brévinoise, basée à Saint-Brévin-les-Pins en Loire-Atlantique.",
 		'hero_text2'       => "En partenariat avec Tipim Studio, nous développons et éditons des jeux familiaux accessibles à tous, avec une petite touche d'éducatif. Nos jeux sont développés en France, fabriqués en Europe et distribués en France, en Belgique et en Suisse.",

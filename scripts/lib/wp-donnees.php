@@ -11,12 +11,12 @@ brev_import_demo();
 
 /* Textes et couleurs personnalisés (Apparence › Personnaliser). */
 $mods = array(
-	'hero_title'    => 'Titre accueil TEST',
-	'jeux_title'    => 'Nos jeux TEST',
-	'footer_legal'  => 'Mentions TEST',
-	'contact_intro' => 'Écrivez-nous TEST',
-	'color_primary' => '#123456',
-	'logo_size'     => 120,
+	'hero_title'    => 'Des jeux drôles, rapides et fédérateurs, créés à Saint-Mars-De-Coutais TEST',
+	'jeux_title'    => 'Les jeux de société TEST',
+	'footer_legal'  => '© La Brévinoise Jeux TEST',
+	'contact_intro' => 'Une question sur nos jeux, une commande pour votre boutique ou une animation pour votre événement ? Écrivez-nous. TEST',
+	'color_primary' => '#11336a',
+	'logo_size'     => 96,
 );
 foreach ( $mods as $k => $v ) {
 	set_theme_mod( 'brev_' . $k, $v );

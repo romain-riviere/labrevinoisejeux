@@ -31,7 +31,7 @@ function brev_assets() {
 	wp_enqueue_style( 'brev-fonts', 'https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap', array(), null );
 	wp_enqueue_style( 'brev-style', get_stylesheet_uri(), array(), BREV_VERSION );
 	wp_add_inline_style( 'brev-style', brev_inline_css() );
-	wp_enqueue_script( 'brev-theme', BREV_URI . '/assets/theme.js', array(), BREV_VERSION, true );
+	wp_enqueue_script( 'brev-theme', BREV_URI . '/assets/js/theme.js', array(), BREV_VERSION, true );
 }
 
 /**
