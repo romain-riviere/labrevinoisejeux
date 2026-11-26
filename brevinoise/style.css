@@ -498,6 +498,7 @@ select:focus-visible,
 }
 .pop .pimg {
   width: 100%;
+  scale: 1.04;
   border-radius: 12px;
   margin-bottom: 4px;
 }
