@@ -242,6 +242,9 @@ select:focus-visible,
   .hero .wrap {
     grid-template-columns: minmax(0, 1fr);
   }
+  .hero p {
+    font-size: 17px;
+  }
 }
 .btn {
   display: inline-flex;
