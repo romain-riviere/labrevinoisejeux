@@ -311,8 +311,8 @@ function brev_import_demo() {
 	}
 	$mem = array(
 		array( 'title' => 'Yvonnick Cheraud', 'role' => "Président de l'association La Brévinoise", 'desc' => "Préside l'association culturelle La Brévinoise à Saint-Brévin-les-Pins.", 'games' => array() ),
-		array( 'title' => 'Damien Marquis (Tipim)', 'role' => 'Chef de projets La Brévinoise Jeux, auteur et illustrateur', 'desc' => "Dirige Tipim Studio, qui développe et illustre les jeux de l'association. Auteur de jeux et de bandes dessinées.", 'games' => array( $ids['uhe25'], $ids['uhe22'], $ids['surf'], $ids['labotv'] ) ),
-		array( 'title' => 'Lÿa', 'role' => 'Illustratrice', 'desc' => 'Co-illustratrice de Surf and Cats avec Tipim.', 'games' => array( $ids['surf'] ) ),
+		array( 'title' => 'Damien Marquis (Tipim)', 'role' => 'Chef de projets La Brévinoise Jeux, auteur et illustrateur', 'desc' => "Dirige Tipim Studio, qui développe et illustre les jeux de l'association. Auteur de jeux et de bandes dessinées.", 'games' => array( $ids['uhe25'], $ids['uhe22'], $ids['surf'], $ids['labotv'] ), 'link_label' => 'Découvrir mon travail', 'link' => 'https://example.com/' ),
+		array( 'title' => 'Lÿa', 'role' => 'Illustratrice', 'desc' => 'Co-illustratrice de Surf and Cats avec Tipim.', 'games' => array( $ids['surf'] ), 'link' => 'https://example.com/' ),
 		array( 'title' => 'Prénom Nom', 'role' => 'Trésorier·ère (exemple)', 'desc' => 'Fiche exemple : remplacez-la depuis Adhérents.', 'games' => array() ),
 		array( 'title' => 'Prénom Nom', 'role' => 'Animation des festivals (exemple)', 'desc' => 'Fiche exemple : remplacez-la depuis Adhérents.', 'games' => array( $ids['escape'], $ids['surf'] ) ),
 	);

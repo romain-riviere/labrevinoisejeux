@@ -31,7 +31,9 @@
 		filter();
 	});
 
-	/* Fenêtre d'infos : survol = petite fenêtre à côté ; clic ou toucher = grande fenêtre au centre */
+	/* Fenêtre d'infos : survol = petite fenêtre à côté ; clic ou toucher = grande fenêtre au centre.
+	   Exception : un élément [data-pop] qui est un lien (<a>, ex. adhérents) garde la petite fenêtre au survol,
+	   mais le clic suit le lien au lieu d'ouvrir la grande fenêtre. */
 	var pop = document.createElement('div'), bg = document.createElement('div');
 	pop.className = 'pop'; pop.hidden = true; pop.setAttribute('role', 'dialog'); pop.id = 'pop';
 	bg.className = 'popbg'; bg.hidden = true;
@@ -70,12 +72,13 @@
 		if (e.target.closest('.pclose') || e.target === bg) return hide();
 		if (e.target.closest('#pop')) return;
 		var t = e.target.closest('[data-pop]');
+		if (t && t.tagName === 'A') return hide();
 		if (t) showModal(t); else if (!pop.hidden) hide();
 	});
 	document.addEventListener('keydown', function (e) {
 		if (e.key === 'Escape' && !pop.hidden) return hide();
 		var t = e.target.closest && e.target.closest('[data-pop]');
-		if (t && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); showModal(t); }
+		if (t && t.tagName !== 'A' && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); showModal(t); }
 	});
 	window.addEventListener('scroll', function () { if (pop.classList.contains('float')) hide(); }, { passive: true });
 	/* Page de présentation : onglets Images / Vidéo, carrousel, vidéo chargée à l'ouverture de l'onglet */

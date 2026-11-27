@@ -27,12 +27,24 @@ if ( is_404() ) {
 		}
 	}
 	the_content();
+	if ( 'adherent' === $k ) {
+		$names = brev_linked_names( get_post() );
+		if ( $names ) {
+			echo '<p class="plbl">Jeux et projets</p><ul class="pgames"><li>' . implode( '</li><li>', array_map( 'esc_html', $names ) ) . '</li></ul>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
+	}
 	if ( $k ) {
 		$link = get_post_meta( get_the_ID(), '_brev_link', true );
 		$play = brev_play_url( get_post() );
 		echo '<p class="cbtns">';
 		if ( $link ) {
-			echo '<a class="' . ( 'festival' === $k ? 'btn' : 'btn shop' ) . '" href="' . esc_url( $link ) . '" target="_blank" rel="noopener">' . esc_html( 'festival' === $k ? 'En savoir plus' : brev_mod( 'item_btn' ) ) . ' →</a>';
+			if ( 'adherent' === $k ) {
+				$label = get_post_meta( get_the_ID(), '_brev_link_label', true );
+				$label = $label ? $label : 'Visiter le site';
+			} else {
+				$label = 'festival' === $k ? 'En savoir plus' : brev_mod( 'item_btn' );
+			}
+			echo '<a class="' . ( 'festival' === $k || 'adherent' === $k ? 'btn' : 'btn shop' ) . '" href="' . esc_url( $link ) . '" target="_blank" rel="noopener">' . esc_html( $label ) . ' →</a>';
 		}
 		if ( $play ) {
 			echo '<a class="btn play" href="' . esc_url( $play ) . '">▶ ' . esc_html( brev_mod( 'play_btn' ) ) . '</a>';

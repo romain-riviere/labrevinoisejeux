@@ -122,6 +122,17 @@ else
 	stop "Des données ont changé avec la mise à jour (détail : .wp-test/differences.txt)"
 fi
 
+# Liens externes d'adhérents : champs ajoutés en 1.2.2, inconnus de la version publiée.
+# Saisis après la mise à jour (comme le ferait un administrateur) pour vérifier leur affichage.
+liens_adherent() { # liens_adherent <titre> <libellé> <adresse>
+	local id; id="$(jq -r --arg t "$1" '.fiches | to_entries[] | select(.value.titre == $t) | .key' "$TEST/apres.json")"
+	[ -n "$id" ] || stop "Adhérent « $1 » introuvable"
+	wp post meta update "$id" _brev_link_label "$2" >/dev/null
+	wp post meta update "$id" _brev_link "$3" >/dev/null
+}
+liens_adherent "Damien Marquis (Tipim)" "Découvrir mon travail TEST" "https://exemple.test/damien"
+liens_adherent "Lÿa" "" "https://exemple.test/lya"
+
 etape "Visite des pages publiques"
 echecs=0
 visiter() { # visiter <adresse> [texte attendu…]
@@ -143,6 +154,8 @@ for u in $(jq -r '.adresses[]' "$TEST/apres.json"); do visiter "$u"; n=$((n + 1)
 visiter "$url/" "Des jeux drôles, rapides et fédérateurs, créés à Saint-Mars-De-Coutais TEST" "--primary:#11336a" "--logo:96px" "© La Brévinoise Jeux TEST"
 visiter "$url/jeux/" "Les jeux" "© La Brévinoise Jeux TEST"
 visiter "$(jq -r '.fiches[] | select(.titre == "Surf and Cats") | .adresse' "$TEST/apres.json")" "Étiquette TEST" "TESTvideo01"
+visiter "$(jq -r '.fiches[] | select(.titre == "Damien Marquis (Tipim)") | .adresse' "$TEST/apres.json")" "Découvrir mon travail TEST" "https://exemple.test/damien"
+visiter "$(jq -r '.fiches[] | select(.titre == "Lÿa") | .adresse' "$TEST/apres.json")" "Visiter le site" "https://exemple.test/lya"
 visiter "$url/jouer/gare-au-chacal/" "BREV_GAME_CFG" "NicoTEST" "Bravo TEST"
 visiter "$url/contact/" "Une question sur nos jeux, une commande pour votre boutique ou une animation pour votre événement ? Écrivez-nous. TEST"
 [ "$echecs" -eq 0 ] && ok "$n pages visitées, textes personnalisés présents"

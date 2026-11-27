@@ -3,7 +3,7 @@ Theme Name: La Brévinoise
 Theme URI: https://www.labrevinoise.fr/
 Author: La Brévinoise Jeux
 Description: Thème de l'association La Brévinoise Jeux : festivals (affiches), jeux de société, Escape Box & accessoires, bandes dessinées, adhérents, page contact et jeu en ligne « Gare au Chacal ». Tout se modifie depuis l'administration (Personnaliser, Menus, fiches, page Gare au Chacal).
-Version: 1.2.1
+Version: 1.3.0
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -505,7 +505,7 @@ select:focus-visible,
   border-radius: 12px;
   margin-bottom: 4px;
 }
-.pop .plbl {
+.plbl {
   font-weight: 800;
   margin-top: 4px;
 }
@@ -615,6 +615,7 @@ select:focus-visible,
   gap: 24px;
 }
 .member {
+  display: block;
   aspect-ratio: 1;
   background: var(--soft);
 }

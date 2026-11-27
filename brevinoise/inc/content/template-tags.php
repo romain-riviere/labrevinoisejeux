@@ -197,16 +197,16 @@ function brev_fest_card( $p ) {
 }
 
 /**
- * Portrait d'un adhérent.
+ * Portrait d'un adhérent : le survol affiche la fenêtre d'infos, un clic mène à sa page.
  *
  * @param WP_Post $p Fiche.
  */
 function brev_member_card( $p ) {
 	$img   = brev_img( $p, 'medium_large' );
 	$title = get_the_title( $p );
-	echo '<div><article class="member" tabindex="0" data-pop="' . (int) $p->ID . '" aria-haspopup="dialog" aria-label="' . esc_attr( $title . ' : afficher la fiche' ) . '">';
+	echo '<div><a class="member" data-pop="' . (int) $p->ID . '" href="' . esc_url( get_permalink( $p ) ) . '" aria-label="' . esc_attr( $title . ' : voir la page' ) . '">';
 	echo $img ? '<img src="' . esc_url( $img ) . '" alt="' . esc_attr( $title ) . '" loading="lazy">' : '<div class="avatar">' . esc_html( brev_initials( $title ) ) . '</div>';
-	echo '</article>';
+	echo '</a>';
 	brev_pop_template( $p, 'adherent' );
 	echo '<div class="mcap"><b>' . esc_html( $title ) . '</b><span>' . esc_html( get_post_meta( $p->ID, '_brev_role', true ) ) . '</span></div></div>';
 }

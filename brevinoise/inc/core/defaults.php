@@ -56,7 +56,7 @@ function brev_defaults() {
 		'intro_jeu'        => "Des jeux familiaux accessibles à tous, drôles, rapides et fédérateurs, avec une petite touche d'éducatif.",
 		'intro_escape'     => "Nos escape box et tous les accessoires pour prolonger l'aventure autour de nos jeux.",
 		'intro_bd'         => "Albums de bandes dessinées coédités par La Brévinoise Jeux, souvent accompagnés d'un cahier de jeux.",
-		'intro_adherent'   => "Les membres qui font vivre l'association. Survolez (ou touchez) une photo pour savoir qui fait quoi.",
+		'intro_adherent'   => "Les membres qui font vivre l'association. Survolez une photo pour savoir qui fait quoi, cliquez dessus pour ouvrir sa page.",
 		'contact_intro'    => 'Une question sur nos jeux, une commande pour votre boutique ou une animation pour votre événement ? Écrivez-nous.',
 		'contact_email'    => '',
 		'contact1_title'   => 'La Brévinoise Jeux',
@@ -160,8 +160,10 @@ function brev_types() {
 			'icon'   => 'dashicons-groups',
 			'img'    => 'Photo',
 			'fields' => array(
-				'role'  => array( "Fonction dans l'association", 'text', '' ),
-				'games' => array( 'Jeux et projets associés', 'games', '' ),
+				'role'       => array( "Fonction dans l'association", 'text', '' ),
+				'games'      => array( 'Jeux et projets associés', 'games', '' ),
+				'link_label' => array( 'Libellé du lien', 'text', 'Texte du bouton sur la page de l’adhérent. Vide = « Visiter le site ».' ),
+				'link'       => array( 'Lien', 'url', 'Site externe de l’adhérent (portfolio, réseau social…). Vide = pas de bouton.' ),
 			),
 		),
 	);

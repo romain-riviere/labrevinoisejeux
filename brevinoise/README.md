@@ -1,4 +1,4 @@
-# Thème WordPress « La Brévinoise » — version 1.2.1
+# Thème WordPress « La Brévinoise » — version 1.3.0
 
 Guide pour les personnes qui gèrent le site. Pour modifier le code du thème ou publier une version, voir le [README du dépôt](https://github.com/romain-riviere/labrevinoisejeux#readme).
 
